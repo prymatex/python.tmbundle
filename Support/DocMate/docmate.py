@@ -3,10 +3,19 @@
 import re
 import sys
 from os import system, path, mkdir, environ as env
-import cPickle
-import urllib2
+try:
+    import cPickle as pickle
+except ImportError:
+    import pickle
+try:
+    import urllib.request as urllib2
+except:
+    import urllib2
 import inspect
-from urlparse import urljoin as _urljoin
+try:
+    from urllib.parse import urljoin as _urljoin
+except:
+    from urlparse import urljoin as _urljoin
 import time
 
 # make sure Support/lib is on the path
@@ -66,7 +75,7 @@ def library_docs(word):
     paths = []
     try:
         f = open(path.join(env["TM_BUNDLE_SUPPORT"], 'DocMate/lib.index'))
-        index = cPickle.load(f)
+        index = pickle.load(f)
     finally:
         f.close()
     word_re = re.compile(r"\b(%s)\b" % re.sub('[^a-zA-Z0-9_\. ]+', '', word))

@@ -80,7 +80,7 @@ def wait_for_server(finished):
 
 def main():
     def onserve():
-        print info()
+        print(info())
         browse_docs()
         
     try:
@@ -95,8 +95,8 @@ def main():
             if pid > 0:
                 wait_for_server(onserve)
                 sys.exit(0)
-        except OSError, e: 
-            print >>sys.stderr, "fork #1 failed: %s" % (e) 
+        except OSError as e: 
+            print("fork #1 failed: %s" % (e), file=sys.stderr)
             raise
     
         os.chdir('/')
@@ -108,17 +108,17 @@ def main():
             if pid > 0:
                 # this is the server's pid
                 sys.exit(0)
-        except OSError, e: 
-            print >>sys.stderr, "fork #2 failed: %s" % (e)
+        except OSError as e: 
+            print("fork #2 failed: %s" % (e), file=sys.stderr)
             raise
     
         start_serv()
-    except SystemExit, e:
+    except SystemExit as e:
         # don't want this printing a <pre> tag in the TM thread
         raise
     except:
         ERR_LOG.write(format_exc())
-        print "<pre>" # so we can read the traceback in the TM thread :)
+        print("<pre>") # so we can read the traceback in the TM thread :)
         raise
 
 if __name__ == '__main__':
