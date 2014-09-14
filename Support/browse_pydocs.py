@@ -5,14 +5,18 @@ import os
 import sys
 import pydoc
 import time
-from urllib2 import urlopen, URLError
+try:
+    from urllib.request import urlopen
+    from urllib.error import URLError
+except:
+    from urllib2 import urlopen, URLError
 from traceback import format_exc
 
 PORT=9877
 URL='http://localhost:%d/' % PORT
 UID='pydoc_server_%d' % PORT
-OUT_LOG = file('/tmp/%s.log' % UID, 'a+')
-ERR_LOG = file('/tmp/%s_error.log' % UID, 'a+', 0)
+OUT_LOG = open('/tmp/%s.log' % UID, 'a+')
+ERR_LOG = open('/tmp/%s_error.log' % UID, 'a+')
 
 def browse_docs():
     cmd = 'open %s' % URL
@@ -28,7 +32,7 @@ def is_serving():
 
 def start_serv():
     # Redirect standard file descriptors.
-    dev_null = file('/dev/null', 'r')
+    dev_null = open('/dev/null', 'r')
     sys.stdout.flush()
     sys.stderr.flush()
     
@@ -36,7 +40,9 @@ def start_serv():
     os.dup2(ERR_LOG.fileno(), sys.stderr.fileno())
     os.dup2(dev_null.fileno(), sys.stdin.fileno())
     
-    pydoc.serve(PORT)
+    # TODO Python 2 support
+    #pydoc.serve(PORT)
+    pydoc.browse(PORT, open_browser=False)
 
 def info():
     def dd(term, d):
