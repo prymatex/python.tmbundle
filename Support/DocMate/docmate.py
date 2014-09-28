@@ -74,7 +74,7 @@ def library_docs(word):
     # build a list of matching library docs
     paths = []
     try:
-        f = open(path.join(env["TM_BUNDLE_SUPPORT"], 'DocMate/lib.index'))
+        f = open(path.join(env["TM_BUNDLE_SUPPORT"], 'DocMate/lib.index'), "rb")
         index = pickle.load(f)
     finally:
         f.close()
