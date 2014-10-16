@@ -70,9 +70,9 @@ def make_snippet(name):
 from os import environ as env
 from sys import exit
 try:
-    print make_snippet(env['TM_CURRENT_WORD'])
+    print(make_snippet(env['TM_CURRENT_WORD']))
 except KeyError:
-    print 'Please type the new function\'s name\n(you can also use def⇥).'
+    print('Please type the new function\'s name\n(you can also use def⇥).')
     exit(206)</string>
 	<key>fallbackInput</key>
 	<string>word</string>
